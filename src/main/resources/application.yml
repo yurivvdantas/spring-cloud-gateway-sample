@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: transacional-gateway-api
+  sleuth:
+    reactor: 
+      instrumentation-type: manual
+  cloud:
+    gateway:
+      routes:
+        - id: teste
+          uri: http://localhost:${server.port}
+          predicates:
+          - Path=/redirect/**
+          filters:
+          - RewritePath= /redirect/(?<remains>.*), /${remains}
+
+server:
+  port: 8080
